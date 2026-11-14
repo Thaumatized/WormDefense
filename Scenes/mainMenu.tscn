@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cy70vwyood3ct"]
+
+[ext_resource type="Script" uid="uid://dg6g5htquo3ee" path="res://Scripts/MainMenu.cs" id="1_60k44"]
+[ext_resource type="PackedScene" uid="uid://wdgq06i5ehml" path="res://Scenes/Gameplay.tscn" id="2_5pknu"]
+
+[node name="Control" type="Control" unique_id=1941467098]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_60k44")
+gameplayScene = ExtResource("2_5pknu")
+
+[node name="Play" type="Button" parent="." unique_id=427229550]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 161.0
+offset_right = 772.0
+offset_bottom = 259.0
+text = "Paly"
+
+[node name="2Player" type="Button" parent="." unique_id=523169646]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 276.0
+offset_right = 772.0
+offset_bottom = 374.0
+disabled = true
+text = "2 Pennies"
+
+[node name="Exit" type="Button" parent="." unique_id=1204593569]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 391.0
+offset_right = 772.0
+offset_bottom = 489.0
+text = "Exit"
+
+[connection signal="pressed" from="Play" to="." method="startGame"]
+[connection signal="pressed" from="Exit" to="." method="exitGame"]
