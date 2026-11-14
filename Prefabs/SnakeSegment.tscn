@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://f28ruqj3oe45"]
+
+[ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="1_bnkbe"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hn77i"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
+radius = 1.0
+
+[node name="SnakeSegment" type="AnimatableBody3D" unique_id=1854939182]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2139997939]
+material_override = ExtResource("1_bnkbe")
+mesh = SubResource("SphereMesh_hn77i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1281561929]
+shape = SubResource("SphereShape3D_45flt")

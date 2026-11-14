@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://brsofgwqglfc5"]
+
+[ext_resource type="Material" uid="uid://cox6ysgxuc07e" path="res://Materials/GrassLight.tres" id="1_jg6lk"]
+[ext_resource type="Material" uid="uid://ca1tcy71jymka" path="res://Materials/GrassDark.tres" id="1_uel8m"]
+[ext_resource type="Material" uid="uid://bot0k80yuu4g0" path="res://Materials/Stone.tres" id="3_kneap"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_45flt"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f5lv3"]
+size = Vector2(1.8, 1.8)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kneap"]
+radius = 0.9
+
+[sub_resource type="SphereMesh" id="SphereMesh_45flt"]
+radius = 0.9
+height = 1.8
+
+[node name="Boulder" type="MeshInstance3D" unique_id=1613909426]
+mesh = SubResource("PlaneMesh_45flt")
+surface_material_override/0 = ExtResource("1_jg6lk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=262666563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("PlaneMesh_f5lv3")
+surface_material_override/0 = ExtResource("1_uel8m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=161938061]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=799380298]
+shape = SubResource("SphereShape3D_kneap")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D" unique_id=846855761]
+mesh = SubResource("SphereMesh_45flt")
+surface_material_override/0 = ExtResource("3_kneap")

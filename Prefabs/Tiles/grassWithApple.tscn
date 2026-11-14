@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dlueksnv54g7b"]
+
+[ext_resource type="Material" uid="uid://cox6ysgxuc07e" path="res://Materials/GrassLight.tres" id="1_po663"]
+[ext_resource type="Material" uid="uid://ca1tcy71jymka" path="res://Materials/GrassDark.tres" id="2_pmbcc"]
+[ext_resource type="PackedScene" uid="uid://bj7popd0kp1gp" path="res://Prefabs/Apple.tscn" id="3_pmbcc"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_45flt"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f5lv3"]
+size = Vector2(1.8, 1.8)
+
+[node name="Grass" type="MeshInstance3D" unique_id=2078950987]
+mesh = SubResource("PlaneMesh_45flt")
+surface_material_override/0 = ExtResource("1_po663")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1603980167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+material_override = ExtResource("2_pmbcc")
+mesh = SubResource("PlaneMesh_f5lv3")
+surface_material_override/0 = ExtResource("2_pmbcc")
+
+[node name="Apple" parent="." unique_id=1325488358 instance=ExtResource("3_pmbcc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

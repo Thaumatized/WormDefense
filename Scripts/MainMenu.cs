@@ -2,12 +2,12 @@ using Godot;
 
 public partial class MainMenu : Control
 {
-    [Export]
+	[Export]
 	PackedScene gameplayScene;
 
 	public void startGame()
 	{
-        GetTree().Root.AddChild(gameplayScene.Instantiate());
+		GetTree().Root.AddChild(gameplayScene.Instantiate());
 		this.QueueFree();
 	}
 

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bj7popd0kp1gp"]
+
+[ext_resource type="Material" uid="uid://d4l57i2yxf318" path="res://Materials/Apple.tres" id="1_tgccl"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_45flt"]
+radius = 0.75
+height = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
+radius = 0.75
+
+[node name="Apple" type="StaticBody3D" unique_id=1325488358]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1719454998]
+material_override = ExtResource("1_tgccl")
+mesh = SubResource("SphereMesh_45flt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1495890577]
+shape = SubResource("SphereShape3D_45flt")
