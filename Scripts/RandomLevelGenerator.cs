@@ -19,12 +19,7 @@ public partial class RandomLevelGenerator : Node3D
     public void Randomize()
     {
 		NormalizeWeights();
-
-		foreach(Node child in GetChildren())
-		{
-			child.QueueFree();
-		}
-
+		
 		/* 
 			The -Vector2I.One is flipped for the area defining vectors to add and edge of 1 tile
 			which we will fill with walls to define a limited play area.

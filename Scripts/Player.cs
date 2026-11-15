@@ -85,6 +85,7 @@ public partial class Player : Node3D
 		if(collidedObject.Name == "Apple")
 		{
 			growSegment();
+			GameManager.instance.SpawnApple();
 			collidedObject.QueueFree();
 			return true;
 		}
