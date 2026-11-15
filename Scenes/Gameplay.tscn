@@ -38,11 +38,11 @@ size = Vector3(0.75, 0.75, 0.75)
 size = Vector3(0.75, 0.75, 0.75)
 
 [sub_resource type="SphereMesh" id="SphereMesh_f5lv3"]
-radius = 0.25
-height = 0.5
+radius = 0.4
+height = 0.8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhmiw"]
-radius = 0.25
+radius = 0.4
 
 [node name="Node3D" type="Node3D" unique_id=1283898670 node_paths=PackedStringArray("tileRoot")]
 script = ExtResource("1_vu60g")

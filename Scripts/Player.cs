@@ -17,6 +17,9 @@ public partial class Player : Node3D
 	private List<SnakeSegment> segments;
 
 	private bool birthing;
+	private bool headPregnating;
+
+	private static float pregnantScale = 1.2f;
 
 	public override void _EnterTree()
 	{
@@ -63,8 +66,11 @@ public partial class Player : Node3D
 
 		if(Engine.GetPhysicsFrames() % moveEveryXFrames == 0)
 		{
+			segments[0].pregnant = headPregnating;
+			
 			previousDirection = direction;
 			birthing = false;
+			headPregnating = false;
 
 			KinematicCollision3D collision = segments[0].MoveAndCollide(previousDirection, true);
 			if(collision != null)
@@ -74,9 +80,9 @@ public partial class Player : Node3D
 			}
 
 			int i = segments.Count-1;
-			if(segments[i].Pregnant)
+			if(segments[i].pregnant)
 			{
-				segments[i].Pregnant = false;
+				segments[i].pregnant = false;
 				growSegment();
 				birthing = true;
 			}
@@ -85,18 +91,29 @@ public partial class Player : Node3D
 			{
 				segments[i].Position = new Vector3(Convert.ToInt32(segments[i].Position.X), segments[i].Position.Y, Convert.ToInt32(segments[i].Position.Z));
 				segments[i].direction = segments[i-1].direction;
-				segments[i].Pregnant = segments[i-1].Pregnant;
+				segments[i].pregnant = segments[i-1].pregnant;
+				segments[i].Scale = Vector3.One * (segments[i].pregnant ? pregnantScale : 1);
 			}
 			segments[0].Position = new Vector3(Convert.ToInt32(segments[0].Position.X), segments[0].Position.Y, Convert.ToInt32(segments[0].Position.Z));
 			segments[0].direction = previousDirection;
-			segments[0].Pregnant = false;
 		}
 		else
 		{
+			float pregnantStep = (pregnantScale-1) / moveEveryXFrames;
 			for (int i = segments.Count - (birthing ? 2 : 1); i >= 0; i--)
 			{
 				segments[i].Position += ((Vector3)segments[i].direction) * (float)delta * (60f/moveEveryXFrames);
-				//segments[i].Pregnant = segments[i-1].Pregnant;
+				if(i == 0)
+				{
+					if(headPregnating != segments[i].pregnant)
+					{
+						segments[i].Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
+					}
+				}
+				else if(segments[i].pregnant != segments[i-1].pregnant)
+				{
+					segments[i].Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
+				}
 			}
 		}
 	}
@@ -108,7 +125,7 @@ public partial class Player : Node3D
 		Node3D collidedObject = collision.GetCollider() as Node3D;
 		if(collidedObject.Name == "Apple")
 		{
-			segments[0].Pregnant = true;
+			headPregnating = true;
 			GameManager.instance.SpawnApple();
 			collidedObject.QueueFree();
 			return true;
@@ -126,7 +143,7 @@ public partial class Player : Node3D
 			(segments[0], segments[segments.Count-1]) = (segments[segments.Count-1], segments[0]);
 			(segments[0].direction, segments[segments.Count-1].direction) = (segments[segments.Count-1].direction, segments[0].direction);
 			(segments[0].Position, segments[segments.Count-1].Position) = (segments[segments.Count-1].Position, segments[0].Position);
-			(segments[0].Pregnant, segments[segments.Count-1].Pregnant) = (segments[segments.Count-1].Pregnant, segments[0].Pregnant);
+			(segments[0].pregnant, segments[segments.Count-1].pregnant) = (segments[segments.Count-1].pregnant, segments[0].pregnant);
 
 			return false;
 		}
