@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="4_ovofm"]
 [ext_resource type="PackedScene" uid="uid://cy8jr71wseda0" path="res://Prefabs/Tiles/starterGrass.tscn" id="5_rhmiw"]
 [ext_resource type="PackedScene" uid="uid://dlueksnv54g7b" path="res://Prefabs/Tiles/grassWithApple.tscn" id="5_uotjs"]
+[ext_resource type="PackedScene" uid="uid://dn7or4bbryj4" path="res://Prefabs/Tiles/grassWithDefenceTarget.tscn" id="9_7wr7o"]
 [ext_resource type="Script" uid="uid://c7twy4cli1v5u" path="res://Scripts/SnakeSegment.cs" id="11_w5l26"]
 
 [sub_resource type="Resource" id="Resource_xwjbm"]
@@ -60,8 +61,10 @@ script = ExtResource("1_u8j7u")
 tilePrefabs = Array[Object]([SubResource("Resource_xwjbm"), SubResource("Resource_rhmiw"), SubResource("Resource_2xboj")])
 safeTile = ExtResource("5_rhmiw")
 wallTile = ExtResource("2_tdndw")
+defenceTargetTile = ExtResource("9_7wr7o")
 Area = Vector2i(50, 50)
 StartingArea = Vector2i(5, 8)
+defenceTargetArea = Vector2i(15, 15)
 
 [node name="ShenakyShnake" type="Node3D" parent="." unique_id=2106071133]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class RandomLevelGenerator : Node3D
@@ -9,12 +10,18 @@ public partial class RandomLevelGenerator : Node3D
 	PackedScene safeTile;
 	[Export]
 	PackedScene wallTile;
+	[Export]
+	PackedScene defenceTargetTile;
 
 	[Export]
 	Vector2I Area;
 
 	[Export]
 	Vector2I StartingArea;
+	[Export]
+	Vector2I defenceTargetArea;
+	[Export]
+	int defenceTargetCount = 5;
 
     public void Randomize()
     {
@@ -29,6 +36,25 @@ public partial class RandomLevelGenerator : Node3D
 
 		Vector2I startingMinimumPoint = -StartingArea / 2;
 		Vector2I startingMaximumPoint = startingMinimumPoint + StartingArea- Vector2I.One;
+		
+		Vector2I defenceMinimumPoint = -defenceTargetArea / 2;
+		//Vector2I defenceMaximumPoint = defenceMinimumPoint + defenceTargetArea- Vector2I.One;
+
+		List<Vector2I> defenceTargetCoords = new List<Vector2I>();
+
+		while(defenceTargetCoords.Count < defenceTargetCount)
+		{	
+			Vector2I potentialCoords = new Vector2I((int)(GD.Randi() % defenceTargetArea.X) + defenceMinimumPoint.X, (int)(GD.Randi() % defenceTargetArea.Y) + defenceMinimumPoint.Y);
+			if(potentialCoords.X > startingMinimumPoint.X && potentialCoords.X < startingMaximumPoint.X)
+			{
+				continue;
+			}
+			if(potentialCoords.Y > startingMinimumPoint.Y && potentialCoords.Y < startingMaximumPoint.Y)
+			{
+				continue;
+			}
+			defenceTargetCoords.Add(potentialCoords);
+		}
 
 		for(int x = minimumPoint.X; x <= maximumPoint.X; x++)
 		{
@@ -36,7 +62,11 @@ public partial class RandomLevelGenerator : Node3D
 			{
 				PackedScene prefab;
 
-				if(x >= startingMinimumPoint.X && x <= startingMaximumPoint.X
+				if(defenceTargetCoords.Contains(new Vector2I(x, z)))
+				{
+					prefab = defenceTargetTile;
+				}
+				else if(x >= startingMinimumPoint.X && x <= startingMaximumPoint.X
 					&& z >= startingMinimumPoint.Y && z <= startingMaximumPoint.Y)
 				{
 					prefab = safeTile;

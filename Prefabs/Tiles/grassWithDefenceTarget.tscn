@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dn7or4bbryj4"]
+
+[ext_resource type="Material" uid="uid://cox6ysgxuc07e" path="res://Materials/GrassLight.tres" id="1_dwpxg"]
+[ext_resource type="Script" uid="uid://buoieeoo6gl0h" path="res://Scripts/Tile.cs" id="2_y1al2"]
+[ext_resource type="PackedScene" uid="uid://b2x1kp8ix2jkq" path="res://Prefabs/DefenceTarget.tscn" id="3_dwpxg"]
+[ext_resource type="Material" uid="uid://ca1tcy71jymka" path="res://Materials/GrassDark.tres" id="3_idnte"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_45flt"]
+size = Vector2(1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f5lv3"]
+size = Vector2(0.9, 0.9)
+
+[node name="Grass" type="MeshInstance3D" unique_id=2078950987]
+mesh = SubResource("PlaneMesh_45flt")
+surface_material_override/0 = ExtResource("1_dwpxg")
+script = ExtResource("2_y1al2")
+
+[node name="DefenseTarget" parent="." unique_id=1325488358 instance=ExtResource("3_dwpxg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1603980167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+material_override = ExtResource("3_idnte")
+mesh = SubResource("PlaneMesh_f5lv3")
+surface_material_override/0 = ExtResource("3_idnte")
