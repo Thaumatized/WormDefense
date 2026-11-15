@@ -4,9 +4,6 @@ using Godot;
 public partial class Player : Node3D
 {
 	[Export]
-	public float tileSize = 2;
-
-	[Export]
 	public ulong moveEveryXFrames = 20;
 
 	[Export]
@@ -62,7 +59,7 @@ public partial class Player : Node3D
 		{
 			previousDirection = direction;
 
-			KinematicCollision3D collision = segments[0].MoveAndCollide(previousDirection * tileSize, true);
+			KinematicCollision3D collision = segments[0].MoveAndCollide(previousDirection, true);
 			if(collision != null)
 			{
 				bool proceed = headHit(collision);
@@ -76,7 +73,7 @@ public partial class Player : Node3D
 			{
 				segments[i].Position = segments[i-1].Position;
 			}
-			segments[0].Position += previousDirection * tileSize;
+			segments[0].Position += previousDirection;
 		}
 	}
 

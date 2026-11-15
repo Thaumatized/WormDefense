@@ -16,11 +16,9 @@ public partial class RandomLevelGenerator : Node3D
 	[Export]
 	Vector2I StartingArea;
 
-	[Export]
-	float TileSize = 2;
-
-    public override void _EnterTree()
+    public void Randomize()
     {
+		NormalizeWeights();
 
 		foreach(Node child in GetChildren())
 		{
@@ -72,7 +70,7 @@ public partial class RandomLevelGenerator : Node3D
 				}
 
 				Node3D newTile = prefab.Instantiate<Node3D>();
-				newTile.Position = new Vector3(x * TileSize, 0, z * TileSize);
+				newTile.Position = new Vector3(x, 0, z);
 				this.AddChild(newTile);
 			}
 		}
@@ -81,7 +79,7 @@ public partial class RandomLevelGenerator : Node3D
 	/*
 		Normalizes tile weights to total 1. This makes it easy to pick random ones with the weight as GD.Randf returns 0-1
 	*/
-	private void normalizeWeights()
+	private void NormalizeWeights()
 	{
 		float tilePrefabsTotalWeight = 0;
 		for (int i = 0; i < tilePrefabs.Length; i++)

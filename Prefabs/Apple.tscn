@@ -3,11 +3,11 @@
 [ext_resource type="Material" uid="uid://d4l57i2yxf318" path="res://Materials/Apple.tres" id="1_tgccl"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_45flt"]
-radius = 0.75
-height = 1.5
+radius = 0.375
+height = 0.75
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
-radius = 0.75
+radius = 0.375
 
 [node name="Apple" type="StaticBody3D" unique_id=1325488358]
 
