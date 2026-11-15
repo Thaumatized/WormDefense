@@ -10,7 +10,6 @@ public partial class Player : Node3D
 	[Export]
 	public PackedScene segmentTemplate;
 
-	private Vector3I direction = Vector3I.Forward;
 	private Vector3I previousDirection = Vector3I.Forward;
 
 	// order is head to tail
@@ -20,6 +19,8 @@ public partial class Player : Node3D
 	private bool headPregnating;
 
 	private static float pregnantScale = 1.2f;
+
+	public List<Vector3I> inputQueue = new List<Vector3I>();
 
 	public override void _EnterTree()
 	{
@@ -34,31 +35,19 @@ public partial class Player : Node3D
 	{
 		if (@event.IsActionPressed("Player_1_Move_Left"))
 		{
-			if(previousDirection.X == 0)
-			{
-				direction = Vector3I.Left;
-			}
+			inputQueue.Add(Vector3I.Left);
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Right"))
 		{
-			if(previousDirection.X == 0)
-			{
-				direction = Vector3I.Right;
-			}
+			inputQueue.Add(Vector3I.Right);
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Forward"))
 		{
-			if(previousDirection.Z == 0)
-			{
-				direction = Vector3I.Forward;
-			}
+			inputQueue.Add(Vector3I.Forward);
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Back"))
 		{
-			if(previousDirection.Z == 0)
-			{
-				direction = Vector3I.Back;
-			}
+			inputQueue.Add(Vector3I.Back);
 		}
 	}
 
@@ -68,7 +57,16 @@ public partial class Player : Node3D
 		{
 			bool headWillBePregnantAfterThisTick = headPregnating;
 
-			previousDirection = direction;
+			if(inputQueue.Count > 0)
+			{
+				Vector3I direction = inputQueue[0];
+				inputQueue.RemoveAt(0);
+				if(
+					(previousDirection.X == 0 && direction.X != 0)
+					|| (previousDirection.Z == 0 && direction.Z != 0)
+					)
+				previousDirection = direction;
+			}
 			birthing = false;
 			headPregnating = false;
 
@@ -138,7 +136,8 @@ public partial class Player : Node3D
 				segment.direction *= -1;
 			}
 			segments.Reverse();
-			direction = previousDirection = segments[0].direction;
+			inputQueue = new List<Vector3I>();
+			previousDirection = segments[0].direction;
 
 			// Move head back to front
 			(segments[0], segments[segments.Count-1]) = (segments[segments.Count-1], segments[0]);
