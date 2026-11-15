@@ -66,8 +66,8 @@ public partial class Player : Node3D
 
 		if(Engine.GetPhysicsFrames() % moveEveryXFrames == 0)
 		{
-			segments[0].pregnant = headPregnating;
-			
+			bool headWillBePregnantAfterThisTick = headPregnating;
+
 			previousDirection = direction;
 			birthing = false;
 			headPregnating = false;
@@ -96,6 +96,7 @@ public partial class Player : Node3D
 			}
 			segments[0].Position = new Vector3(Convert.ToInt32(segments[0].Position.X), segments[0].Position.Y, Convert.ToInt32(segments[0].Position.Z));
 			segments[0].direction = previousDirection;
+			segments[0].pregnant = headWillBePregnantAfterThisTick;
 		}
 		else
 		{
