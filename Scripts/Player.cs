@@ -10,18 +10,20 @@ public partial class Player : Node3D
 	[Export]
 	public PackedScene segmentTemplate;
 
-	private Vector3 direction = Vector3.Forward;
-	private Vector3 previousDirection = Vector3.Forward;
+	private Vector3I direction = Vector3I.Forward;
+	private Vector3I previousDirection = Vector3I.Forward;
 
 	// order is head to tail
 	private List<SnakeSegment> segments;
+
+	private bool birthing;
 
 	public override void _EnterTree()
 	{
 		segments = [GetChild<SnakeSegment>(0), GetChild<SnakeSegment>(1)];
 		foreach(SnakeSegment segment in segments)
 		{
-			segment.previousDirection = previousDirection;
+			segment.direction = previousDirection;
 		}
 	}
 
@@ -31,28 +33,28 @@ public partial class Player : Node3D
 		{
 			if(previousDirection.X == 0)
 			{
-				direction = Vector3.Left;
+				direction = Vector3I.Left;
 			}
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Right"))
 		{
 			if(previousDirection.X == 0)
 			{
-				direction = Vector3.Right;
+				direction = Vector3I.Right;
 			}
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Forward"))
 		{
 			if(previousDirection.Z == 0)
 			{
-				direction = Vector3.Forward;
+				direction = Vector3I.Forward;
 			}
 		}
 		else if (@event.IsActionPressed("Player_1_Move_Back"))
 		{
 			if(previousDirection.Z == 0)
 			{
-				direction = Vector3.Back;
+				direction = Vector3I.Back;
 			}
 		}
 	}
@@ -62,6 +64,7 @@ public partial class Player : Node3D
 		if(Engine.GetPhysicsFrames() % moveEveryXFrames == 0)
 		{
 			previousDirection = direction;
+			birthing = false;
 
 			KinematicCollision3D collision = segments[0].MoveAndCollide(previousDirection, true);
 			if(collision != null)
@@ -75,24 +78,26 @@ public partial class Player : Node3D
 			{
 				segments[i].Pregnant = false;
 				growSegment();
-			}
-			else
-			{
-				segments[i].Position = segments[i-1].Position;
-				segments[i].previousDirection = segments[i-1].previousDirection;
-				segments[i].Pregnant = segments[i-1].Pregnant;
-				i--;
+				birthing = true;
 			}
 
 			for (; i > 0; i--)
 			{
-				segments[i].Position = segments[i-1].Position;
-				segments[i].previousDirection = segments[i-1].previousDirection;
+				segments[i].Position = new Vector3(Convert.ToInt32(segments[i].Position.X), segments[i].Position.Y, Convert.ToInt32(segments[i].Position.Z));
+				segments[i].direction = segments[i-1].direction;
 				segments[i].Pregnant = segments[i-1].Pregnant;
 			}
-			segments[0].Position += previousDirection;
-			segments[0].previousDirection = previousDirection;
+			segments[0].Position = new Vector3(Convert.ToInt32(segments[0].Position.X), segments[0].Position.Y, Convert.ToInt32(segments[0].Position.Z));
+			segments[0].direction = previousDirection;
 			segments[0].Pregnant = false;
+		}
+		else
+		{
+			for (int i = segments.Count - (birthing ? 2 : 1); i >= 0; i--)
+			{
+				segments[i].Position += ((Vector3)segments[i].direction) * (float)delta * (60f/moveEveryXFrames);
+				//segments[i].Pregnant = segments[i-1].Pregnant;
+			}
 		}
 	}
 
@@ -112,14 +117,14 @@ public partial class Player : Node3D
 		{
 			foreach(SnakeSegment segment in segments)
 			{
-				segment.previousDirection *= -1;
+				segment.direction *= -1;
 			}
 			segments.Reverse();
-			direction = previousDirection = segments[0].previousDirection;
+			direction = previousDirection = segments[0].direction;
 
 			// Move head back to front
 			(segments[0], segments[segments.Count-1]) = (segments[segments.Count-1], segments[0]);
-			(segments[0].previousDirection, segments[segments.Count-1].previousDirection) = (segments[segments.Count-1].previousDirection, segments[0].previousDirection);
+			(segments[0].direction, segments[segments.Count-1].direction) = (segments[segments.Count-1].direction, segments[0].direction);
 			(segments[0].Position, segments[segments.Count-1].Position) = (segments[segments.Count-1].Position, segments[0].Position);
 			(segments[0].Pregnant, segments[segments.Count-1].Pregnant) = (segments[segments.Count-1].Pregnant, segments[0].Pregnant);
 
@@ -131,7 +136,7 @@ public partial class Player : Node3D
 	{
 		SnakeSegment newSegment = segmentTemplate.Instantiate<SnakeSegment>();
 		newSegment.Position = segments[segments.Count-1].Position;
-		newSegment.previousDirection = segments[segments.Count-1].previousDirection;
+		newSegment.direction = segments[segments.Count-1].direction;
 		this.AddChild(newSegment);
 		segments.Insert(segments.Count-1, newSegment);
 	}

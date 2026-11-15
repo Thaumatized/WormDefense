@@ -1,9 +1,8 @@
 using Godot;
-using System;
 
 public partial class SnakeSegment : RigidBody3D
 {
-	public Vector3 previousDirection;
+	public Vector3I direction;
 	public bool Pregnant {
 	get;
 	set
