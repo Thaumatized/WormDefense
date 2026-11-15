@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://f28ruqj3oe45"]
 
 [ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="1_bnkbe"]
+[ext_resource type="Script" uid="uid://c7twy4cli1v5u" path="res://Scripts/SnakeSegment.cs" id="1_f0n56"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_hn77i"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
 
-[node name="SnakeSegment" type="AnimatableBody3D" unique_id=1854939182]
+[node name="RigidBody3D" type="RigidBody3D" unique_id=1390561008]
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_f0n56")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2139997939]
 material_override = ExtResource("1_bnkbe")

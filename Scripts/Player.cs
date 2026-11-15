@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -12,13 +13,16 @@ public partial class Player : Node3D
 	private Vector3 direction = Vector3.Forward;
 	private Vector3 previousDirection = Vector3.Forward;
 
-	private List<AnimatableBody3D> segments;
-	private List<Vector3> previousDirectionList;
+	// order is head to tail
+	private List<SnakeSegment> segments;
 
 	public override void _EnterTree()
 	{
-		segments = [GetChild<AnimatableBody3D>(0), GetChild<AnimatableBody3D>(1)];
-		previousDirectionList = [previousDirection, previousDirection];
+		segments = [GetChild<SnakeSegment>(0), GetChild<SnakeSegment>(1)];
+		foreach(SnakeSegment segment in segments)
+		{
+			segment.previousDirection = previousDirection;
+		}
 	}
 
 	public override void _Input(InputEvent @event)
@@ -66,14 +70,29 @@ public partial class Player : Node3D
 				if(!proceed) return;
 			}
 
-			previousDirectionList.RemoveAt(0);
-			previousDirectionList.Add(previousDirection);
-
-			for (int i = segments.Count-1; i > 0; i--)
+			int i = segments.Count-1;
+			if(segments[i].Pregnant)
+			{
+				segments[i].Pregnant = false;
+				growSegment();
+			}
+			else
 			{
 				segments[i].Position = segments[i-1].Position;
+				segments[i].previousDirection = segments[i-1].previousDirection;
+				segments[i].Pregnant = segments[i-1].Pregnant;
+				i--;
+			}
+
+			for (; i > 0; i--)
+			{
+				segments[i].Position = segments[i-1].Position;
+				segments[i].previousDirection = segments[i-1].previousDirection;
+				segments[i].Pregnant = segments[i-1].Pregnant;
 			}
 			segments[0].Position += previousDirection;
+			segments[0].previousDirection = previousDirection;
+			segments[0].Pregnant = false;
 		}
 	}
 
@@ -84,30 +103,25 @@ public partial class Player : Node3D
 		Node3D collidedObject = collision.GetCollider() as Node3D;
 		if(collidedObject.Name == "Apple")
 		{
-			growSegment();
+			segments[0].Pregnant = true;
 			GameManager.instance.SpawnApple();
 			collidedObject.QueueFree();
 			return true;
 		}
 		else
 		{
-			int headIndex = 0;
-			int tailIndex = segments.Count-1;
-			while(headIndex < tailIndex)
+			foreach(SnakeSegment segment in segments)
 			{
-				Vector3 pos = segments[headIndex].Position;
-				segments[headIndex].Position = segments[tailIndex].Position;
-				segments[tailIndex].Position = pos;
-				headIndex++;
-				tailIndex--;
+				segment.previousDirection *= -1;
 			}
+			segments.Reverse();
+			direction = previousDirection = segments[0].previousDirection;
 
-			for(int i = 0; i < previousDirectionList.Count; i++)
-			{
-				previousDirectionList[i] *= -1;
-			}
-			direction = previousDirection = previousDirectionList[0];
-			previousDirectionList.Reverse();
+			// Move head back to front
+			(segments[0], segments[segments.Count-1]) = (segments[segments.Count-1], segments[0]);
+			(segments[0].previousDirection, segments[segments.Count-1].previousDirection) = (segments[segments.Count-1].previousDirection, segments[0].previousDirection);
+			(segments[0].Position, segments[segments.Count-1].Position) = (segments[segments.Count-1].Position, segments[0].Position);
+			(segments[0].Pregnant, segments[segments.Count-1].Pregnant) = (segments[segments.Count-1].Pregnant, segments[0].Pregnant);
 
 			return false;
 		}
@@ -115,10 +129,10 @@ public partial class Player : Node3D
 
 	private void growSegment()
 	{
-		AnimatableBody3D newSegment = segmentTemplate.Instantiate<AnimatableBody3D>();
-		newSegment.Position = segments[segments.Count-2].Position;
+		SnakeSegment newSegment = segmentTemplate.Instantiate<SnakeSegment>();
+		newSegment.Position = segments[segments.Count-1].Position;
+		newSegment.previousDirection = segments[segments.Count-1].previousDirection;
 		this.AddChild(newSegment);
 		segments.Insert(segments.Count-1, newSegment);
-		previousDirectionList.Insert(0, previousDirectionList[0]);
 	}
 }

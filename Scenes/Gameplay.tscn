@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="4_ovofm"]
 [ext_resource type="PackedScene" uid="uid://cy8jr71wseda0" path="res://Prefabs/Tiles/starterGrass.tscn" id="5_rhmiw"]
 [ext_resource type="PackedScene" uid="uid://dlueksnv54g7b" path="res://Prefabs/Tiles/grassWithApple.tscn" id="5_uotjs"]
+[ext_resource type="Script" uid="uid://c7twy4cli1v5u" path="res://Scripts/SnakeSegment.cs" id="11_w5l26"]
 
 [sub_resource type="Resource" id="Resource_xwjbm"]
 script = ExtResource("3_xwjbm")
@@ -67,7 +68,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("2_r5ka5")
 segmentTemplate = ExtResource("4_mofsa")
 
-[node name="HeadSegment" type="AnimatableBody3D" parent="ShenakyShnake" unique_id=1554981203]
+[node name="HeadSegment" type="RigidBody3D" parent="ShenakyShnake" unique_id=412609053]
+freeze = true
+freeze_mode = 1
+script = ExtResource("11_w5l26")
 
 [node name="Camera3D" type="Camera3D" parent="ShenakyShnake/HeadSegment" unique_id=157642786]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9, 0)
@@ -82,8 +86,11 @@ surface_material_override/0 = ExtResource("4_ovofm")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShenakyShnake/HeadSegment" unique_id=259995389]
 shape = SubResource("BoxShape3D_rhmiw")
 
-[node name="TailSegment" type="AnimatableBody3D" parent="ShenakyShnake" unique_id=1110560686]
+[node name="TailSegment" type="RigidBody3D" parent="ShenakyShnake" unique_id=1365613869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+freeze = true
+freeze_mode = 1
+script = ExtResource("11_w5l26")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ShenakyShnake/TailSegment" unique_id=928298539]
 material_override = ExtResource("4_ovofm")
