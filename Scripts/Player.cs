@@ -92,7 +92,7 @@ public partial class Player : Node3D
 				segments[i].Position = new Vector3(Convert.ToInt32(segments[i].Position.X), segments[i].Position.Y, Convert.ToInt32(segments[i].Position.Z));
 				segments[i].direction = segments[i-1].direction;
 				segments[i].pregnant = segments[i-1].pregnant;
-				segments[i].Scale = Vector3.One * (segments[i].pregnant ? pregnantScale : 1);
+				segments[i].meshInstance3D.Scale = Vector3.One * (segments[i].pregnant ? pregnantScale : 1);
 			}
 			segments[0].Position = new Vector3(Convert.ToInt32(segments[0].Position.X), segments[0].Position.Y, Convert.ToInt32(segments[0].Position.Z));
 			segments[0].direction = previousDirection;
@@ -108,12 +108,12 @@ public partial class Player : Node3D
 				{
 					if(headPregnating != segments[i].pregnant)
 					{
-						segments[i].Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
+						segments[i].meshInstance3D.Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
 					}
 				}
 				else if(segments[i].pregnant != segments[i-1].pregnant)
 				{
-					segments[i].Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
+					segments[i].meshInstance3D.Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
 				}
 			}
 		}

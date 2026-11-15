@@ -7,10 +7,11 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
 
-[node name="RigidBody3D" type="RigidBody3D" unique_id=1390561008]
+[node name="RigidBody3D" type="RigidBody3D" unique_id=1390561008 node_paths=PackedStringArray("meshInstance3D")]
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_f0n56")
+meshInstance3D = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2139997939]
 material_override = ExtResource("1_bnkbe")
