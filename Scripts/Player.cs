@@ -82,7 +82,6 @@ public partial class Player : Node3D
 	*/
 	public bool headHit(KinematicCollision3D collision) {
 		Node3D collidedObject = collision.GetCollider() as Node3D;
-		GD.Print(collidedObject.Name);
 		if(collidedObject.Name == "Apple")
 		{
 			growSegment();
@@ -116,9 +115,9 @@ public partial class Player : Node3D
 	private void growSegment()
 	{
 		AnimatableBody3D newSegment = segmentTemplate.Instantiate<AnimatableBody3D>();
-		this.AddChild(newSegment);
 		newSegment.Position = segments[segments.Count-2].Position;
+		this.AddChild(newSegment);
 		segments.Insert(segments.Count-1, newSegment);
-		previousDirectionList.Add(previousDirectionList[previousDirectionList.Count-1]);
+		previousDirectionList.Insert(0, previousDirectionList[0]);
 	}
 }
