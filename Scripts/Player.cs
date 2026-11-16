@@ -1,11 +1,17 @@
-using System;
 using System.Collections.Generic;
 using Godot;
+
+public struct SnakeLocomotionState {
+	public Vector3I integerPosition;
+	public Vector3I direction;
+	public bool pregnant;
+}
 
 public partial class Player : Node3D
 {
 	[Export]
-	public ulong moveEveryXFrames = 20;
+	public double speed = 1f/3;
+	private double movementCounter;
 
 	[Export]
 	public PackedScene segmentTemplate;
@@ -16,9 +22,12 @@ public partial class Player : Node3D
 	private List<SnakeSegment> segments;
 
 	private bool birthing;
-	private bool headPregnating;
+	private bool pregnating;
+	private bool wasPregnating;
 
 	private static float pregnantScale = 1.2f;
+
+	private double stunTime = 0;
 
 	public List<Vector3I> inputQueue = new List<Vector3I>();
 
@@ -27,8 +36,10 @@ public partial class Player : Node3D
 		segments = [GetChild<SnakeSegment>(0), GetChild<SnakeSegment>(1)];
 		foreach(SnakeSegment segment in segments)
 		{
-			segment.direction = previousDirection;
+			segment.locomotionState.direction = previousDirection;
+			segment.locomotionState.pregnant = false;
 		}
+		movementCounter = speed;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -52,10 +63,17 @@ public partial class Player : Node3D
 	}
 
 	public override void _PhysicsProcess(double delta){
-
-		if(Engine.GetPhysicsFrames() % moveEveryXFrames == 0)
+		if(stunTime > 0)
 		{
-			bool headWillBePregnantAfterThisTick = headPregnating;
+			stunTime -= delta;
+			return;
+		}
+
+		if(movementCounter >= speed)
+		{
+			wasPregnating = pregnating;
+			
+			movementCounter -= speed;
 
 			if(inputQueue.Count > 0)
 			{
@@ -67,83 +85,89 @@ public partial class Player : Node3D
 					)
 				previousDirection = direction;
 			}
+
 			birthing = false;
-			headPregnating = false;
+			pregnating = false;
 
 			KinematicCollision3D collision = segments[0].MoveAndCollide(previousDirection, true);
 			if(collision != null)
 			{
-				bool proceed = headHit(collision);
-				if(!proceed) return;
+				if(!headHit(collision)) {
+					stunTime += speed;
+					return;
+				}
 			}
 
 			int i = segments.Count-1;
-			if(segments[i].pregnant)
+
+			if(segments[i-1].locomotionState.pregnant)
 			{
-				segments[i].pregnant = false;
+				segments[i-1].locomotionState.pregnant = false;
 				growSegment();
 				birthing = true;
 			}
 
 			for (; i > 0; i--)
 			{
-				segments[i].Position = new Vector3(Convert.ToInt32(segments[i].Position.X), segments[i].Position.Y, Convert.ToInt32(segments[i].Position.Z));
-				segments[i].direction = segments[i-1].direction;
-				segments[i].pregnant = segments[i-1].pregnant;
-				segments[i].meshInstance3D.Scale = Vector3.One * (segments[i].pregnant ? pregnantScale : 1);
+				segments[i].locomotionState = segments[i-1].locomotionState;
 			}
-			segments[0].Position = new Vector3(Convert.ToInt32(segments[0].Position.X), segments[0].Position.Y, Convert.ToInt32(segments[0].Position.Z));
-			segments[0].direction = previousDirection;
-			segments[0].pregnant = headWillBePregnantAfterThisTick;
+			
+			segments[0].locomotionState.integerPosition += segments[0].locomotionState.direction;
+			segments[0].locomotionState.direction = previousDirection;
+			segments[0].locomotionState.pregnant = wasPregnating;
 		}
-		else
+
+		float movementDecimal = (float)(movementCounter / speed);
+		for (int i = segments.Count - (birthing ? 2 : 1); i >= 0; i--)
 		{
-			float pregnantStep = (pregnantScale-1) / moveEveryXFrames;
-			for (int i = segments.Count - (birthing ? 2 : 1); i >= 0; i--)
-			{
-				segments[i].Position += ((Vector3)segments[i].direction) * (float)delta * (60f/moveEveryXFrames);
-				if(i == 0)
-				{
-					if(headPregnating != segments[i].pregnant)
-					{
-						segments[i].meshInstance3D.Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
-					}
-				}
-				else if(segments[i].pregnant != segments[i-1].pregnant)
-				{
-					segments[i].meshInstance3D.Scale += Vector3.One * (segments[i].pregnant ? -pregnantStep : pregnantStep);
-				}
-			}
+			segments[i].Position = segments[i].locomotionState.integerPosition + ((Vector3)segments[i].locomotionState.direction) * movementDecimal;
+			
+			bool scaleAfterDeterminator = i == 0 ? pregnating : segments[i-1].locomotionState.pregnant;
+			float scaleBefore = segments[i].locomotionState.pregnant ? pregnantScale : 1;
+			float scaleAfter = scaleAfterDeterminator ? pregnantScale : 1;
+
+			segments[i].meshInstance3D.Scale = Vector3.One * float.Lerp(scaleBefore, scaleAfter, movementDecimal);
 		}
+
+		movementCounter += delta;
 	}
 
 	/*
-		returns if we should move anyways
+		returns true if we can move
 	*/
 	public bool headHit(KinematicCollision3D collision) {
 		Node3D collidedObject = collision.GetCollider() as Node3D;
 		if(collidedObject.Name == "Apple")
 		{
-			headPregnating = true;
+			pregnating = true;
 			GameManager.instance.SpawnApple();
 			collidedObject.QueueFree();
 			return true;
 		}
 		else
 		{
-			foreach(SnakeSegment segment in segments)
+			for (int i = segments.Count-1; i >= 0; i--)
 			{
-				segment.direction *= -1;
+				segments[i].locomotionState.integerPosition += segments[i].locomotionState.direction;
+				segments[i].locomotionState.direction *= -1;
+				segments[i].locomotionState.pregnant = i > 0 ? segments[i-1].locomotionState.pregnant : wasPregnating;
 			}
+
 			segments.Reverse();
 			inputQueue = new List<Vector3I>();
-			previousDirection = segments[0].direction;
+			previousDirection = segments[0].locomotionState.direction;
 
-			// Move head back to front
+			// Move head back to front of list
 			(segments[0], segments[segments.Count-1]) = (segments[segments.Count-1], segments[0]);
-			(segments[0].direction, segments[segments.Count-1].direction) = (segments[segments.Count-1].direction, segments[0].direction);
+			(segments[0].locomotionState, segments[segments.Count-1].locomotionState) = (segments[segments.Count-1].locomotionState, segments[0].locomotionState);
 			(segments[0].Position, segments[segments.Count-1].Position) = (segments[segments.Count-1].Position, segments[0].Position);
-			(segments[0].pregnant, segments[segments.Count-1].pregnant) = (segments[segments.Count-1].pregnant, segments[0].pregnant);
+
+			if(segments[segments.Count-1].locomotionState.pregnant)
+			{
+				segments[segments.Count-1].locomotionState.pregnant = false;
+				growSegment();
+				birthing = true;
+			}
 
 			return false;
 		}
@@ -153,7 +177,7 @@ public partial class Player : Node3D
 	{
 		SnakeSegment newSegment = segmentTemplate.Instantiate<SnakeSegment>();
 		newSegment.Position = segments[segments.Count-1].Position;
-		newSegment.direction = segments[segments.Count-1].direction;
+		newSegment.locomotionState = segments[segments.Count-1].locomotionState;
 		this.AddChild(newSegment);
 		segments.Insert(segments.Count-1, newSegment);
 	}
