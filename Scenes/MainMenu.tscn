@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dg6g5htquo3ee" path="res://Scripts/MainMenu.cs" id="1_60k44"]
 [ext_resource type="PackedScene" uid="uid://wdgq06i5ehml" path="res://Scenes/Gameplay.tscn" id="2_5pknu"]
+[ext_resource type="PackedScene" uid="uid://bln2381fh3674" path="res://Scenes/TestLevel.tscn" id="3_8saeu"]
 
 [node name="Control" type="Control" unique_id=1941467098]
 layout_mode = 3
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_60k44")
 gameplayScene = ExtResource("2_5pknu")
+testScene = ExtResource("3_8saeu")
 
 [node name="Play" type="Button" parent="." unique_id=427229550]
 layout_mode = 0
@@ -27,8 +29,7 @@ offset_left = 387.0
 offset_top = 276.0
 offset_right = 772.0
 offset_bottom = 374.0
-disabled = true
-text = "2 Pennies"
+text = "TEST"
 
 [node name="Exit" type="Button" parent="." unique_id=1204593569]
 layout_mode = 0
@@ -39,4 +40,6 @@ offset_bottom = 489.0
 text = "Exit"
 
 [connection signal="pressed" from="Play" to="." method="startGame"]
+[connection signal="pressed" from="2Player" to="." method="testGame"]
+[connection signal="pressed" from="2Player" to="." method="_on_player_pressed"]
 [connection signal="pressed" from="Exit" to="." method="exitGame"]
