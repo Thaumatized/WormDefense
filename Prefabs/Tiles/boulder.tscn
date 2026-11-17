@@ -22,18 +22,18 @@ height = 0.9
 mesh = SubResource("PlaneMesh_45flt")
 surface_material_override/0 = ExtResource("1_jg6lk")
 script = ExtResource("2_rn8nn")
-TileObject = NodePath("StaticBody3D")
+TileObject = NodePath("Boulder")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=262666563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 mesh = SubResource("PlaneMesh_f5lv3")
 surface_material_override/0 = ExtResource("1_uel8m")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=161938061]
+[node name="Boulder" type="StaticBody3D" parent="." unique_id=161938061]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=799380298]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boulder" unique_id=799380298]
 shape = SubResource("SphereShape3D_kneap")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D" unique_id=846855761]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Boulder" unique_id=846855761]
 mesh = SubResource("SphereMesh_45flt")
 surface_material_override/0 = ExtResource("3_kneap")

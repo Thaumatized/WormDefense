@@ -40,6 +40,6 @@ offset_bottom = 489.0
 text = "Exit"
 
 [connection signal="pressed" from="Play" to="." method="startGame"]
-[connection signal="pressed" from="2Player" to="." method="testGame"]
 [connection signal="pressed" from="2Player" to="." method="_on_player_pressed"]
+[connection signal="pressed" from="2Player" to="." method="testGame"]
 [connection signal="pressed" from="Exit" to="." method="exitGame"]

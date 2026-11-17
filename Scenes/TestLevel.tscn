@@ -2,17 +2,35 @@
 
 [ext_resource type="Script" uid="uid://cnbmke7kg1l4n" path="res://Scripts/GameManager.cs" id="1_cs0qk"]
 [ext_resource type="PackedScene" uid="uid://bj7popd0kp1gp" path="res://Prefabs/Apple.tscn" id="2_ucv7y"]
+[ext_resource type="Script" uid="uid://c7qodsu1ysqwi" path="res://Scripts/Resources/SpawnWave.cs" id="3_f6h8t"]
 [ext_resource type="Script" uid="uid://bjaekxtxyh8d1" path="res://Scripts/RandomLevelGenerator.cs" id="3_wqb3e"]
+[ext_resource type="PackedScene" uid="uid://c258pn4y3h7yn" path="res://Prefabs/Enemy.tscn" id="4_bmar4"]
 [ext_resource type="PackedScene" uid="uid://t0ko1e7dkxiy" path="res://Prefabs/Tiles/grass.tscn" id="4_gjqcy"]
-[ext_resource type="Script" uid="uid://cphtp8wg1jlkt" path="res://Scripts/WeightedScene.cs" id="5_f6h8t"]
+[ext_resource type="Script" uid="uid://ca82nnx68et8h" path="res://Scripts/Resources/SpawnWaveSpawnable.cs" id="5_6ob4b"]
+[ext_resource type="Script" uid="uid://cphtp8wg1jlkt" path="res://Scripts/Resources/WeightedScene.cs" id="5_f6h8t"]
 [ext_resource type="PackedScene" uid="uid://brsofgwqglfc5" path="res://Prefabs/Tiles/boulder.tscn" id="6_bmar4"]
 [ext_resource type="PackedScene" uid="uid://dlueksnv54g7b" path="res://Prefabs/Tiles/grassWithApple.tscn" id="7_6ob4b"]
 [ext_resource type="PackedScene" uid="uid://cy8jr71wseda0" path="res://Prefabs/Tiles/starterGrass.tscn" id="8_h13qa"]
 [ext_resource type="PackedScene" uid="uid://dn7or4bbryj4" path="res://Prefabs/Tiles/grassWithDefenceTarget.tscn" id="9_et6a8"]
 [ext_resource type="Script" uid="uid://bl4p055812bvm" path="res://Scripts/Player.cs" id="10_3uxl7"]
+[ext_resource type="PackedScene" uid="uid://b7ab11aydfmwo" path="res://Prefabs/Tiles/enemySpawn.tscn" id="10_ucv7y"]
 [ext_resource type="PackedScene" uid="uid://f28ruqj3oe45" path="res://Prefabs/SnakeSegment.tscn" id="11_hqamh"]
 [ext_resource type="Script" uid="uid://c7twy4cli1v5u" path="res://Scripts/SnakeSegment.cs" id="12_fc7h1"]
 [ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="13_ckr3k"]
+
+[sub_resource type="Resource" id="Resource_bmar4"]
+script = ExtResource("5_6ob4b")
+prefab = ExtResource("4_bmar4")
+weight = 1.0
+cost = 1
+metadata/_custom_type_script = "uid://ca82nnx68et8h"
+
+[sub_resource type="Resource" id="Resource_f6h8t"]
+script = ExtResource("3_f6h8t")
+budget = 10
+spendingRate = 1.0
+spawnables = Array[Object]([SubResource("Resource_bmar4")])
+metadata/_custom_type_script = "uid://c7qodsu1ysqwi"
 
 [sub_resource type="Resource" id="Resource_xwjbm"]
 script = ExtResource("5_f6h8t")
@@ -49,6 +67,7 @@ radius = 0.4
 script = ExtResource("1_cs0qk")
 tileRoot = NodePath("Tiles")
 Apple = ExtResource("2_ucv7y")
+spawnWaves = Array[Object]([SubResource("Resource_f6h8t")])
 
 [node name="Other" type="Node3D" parent="." unique_id=941740858]
 
@@ -133,110 +152,161 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
 [node name="Grass25" parent="Tiles" unique_id=960860739 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -8)
 
+[node name="Grass8" parent="Tiles" unique_id=1078723813 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
 [node name="Grass30" parent="Tiles" unique_id=1233632044 instance=ExtResource("7_6ob4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -10)
 
 [node name="Boulder2" parent="Tiles" unique_id=1613909426 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -10)
 
+[node name="Grass9" parent="Tiles" unique_id=1331594039 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
 [node name="Grass29" parent="Tiles" unique_id=1137520615 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
-[node name="Grass28" parent="Tiles" unique_id=2112144187 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -10)
+[node name="Grass10" parent="Tiles" unique_id=1495516546 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
 [node name="Grass27" parent="Tiles" unique_id=446187582 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -10)
 
-[node name="Grass40" parent="Tiles" unique_id=368595985 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -12)
+[node name="Grass28" parent="Tiles" unique_id=2112144187 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -10)
+
+[node name="Grass11" parent="Tiles" unique_id=1796976887 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
 
 [node name="Boulder4" parent="Tiles" unique_id=1391967322 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -12)
 
+[node name="Grass12" parent="Tiles" unique_id=1178867053 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="Grass40" parent="Tiles" unique_id=368595985 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -12)
+
+[node name="Grass13" parent="Tiles" unique_id=2114120688 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+
 [node name="Grass39" parent="Tiles" unique_id=625935382 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 
-[node name="Grass38" parent="Tiles" unique_id=1298444577 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -12)
-
-[node name="Grass37" parent="Tiles" unique_id=1947054329 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -12)
-
-[node name="Grass36" parent="Tiles" unique_id=1348451837 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
+[node name="Grass14" parent="Tiles" unique_id=757809044 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
 
 [node name="Grass35" parent="Tiles" unique_id=99161534 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -14)
 
-[node name="Grass34" parent="Tiles" unique_id=1293568131 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -14)
-
-[node name="Grass33" parent="Tiles" unique_id=160960419 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
-
-[node name="Boulder3" parent="Tiles" unique_id=1910688144 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -14)
-
 [node name="Grass60" parent="Tiles" unique_id=1794557665 instance=ExtResource("7_6ob4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -8)
 
-[node name="Grass80" parent="Tiles" unique_id=772507010 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -8)
+[node name="Grass38" parent="Tiles" unique_id=1298444577 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -12)
+
+[node name="Grass34" parent="Tiles" unique_id=1293568131 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -14)
 
 [node name="Boulder12" parent="Tiles" unique_id=563055427 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -8)
 
+[node name="Grass33" parent="Tiles" unique_id=160960419 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
 [node name="Grass79" parent="Tiles" unique_id=1000161546 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -8)
-
-[node name="Grass78" parent="Tiles" unique_id=1848098294 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -8)
 
 [node name="Grass77" parent="Tiles" unique_id=226816581 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
 
+[node name="Grass15" parent="Tiles" unique_id=464572517 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="Grass16" parent="Tiles" unique_id=819955705 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+
+[node name="Grass37" parent="Tiles" unique_id=1947054329 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -12)
+
 [node name="Grass76" parent="Tiles" unique_id=470667196 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -10)
 
-[node name="Grass75" parent="Tiles" unique_id=328476807 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -12)
+[node name="Grass17" parent="Tiles" unique_id=283584013 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Grass36" parent="Tiles" unique_id=1348451837 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
+
+[node name="Grass18" parent="Tiles" unique_id=2101260023 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+
+[node name="Boulder3" parent="Tiles" unique_id=1910688144 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -14)
+
+[node name="Grass19" parent="Tiles" unique_id=2012365211 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="Grass20" parent="Tiles" unique_id=376651560 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
 
 [node name="Grass74" parent="Tiles" unique_id=1757655858 instance=ExtResource("7_6ob4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -14)
 
-[node name="Boulder11" parent="Tiles" unique_id=701614138 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -14)
+[node name="Grass81" parent="Tiles" unique_id=1406337236 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
 
 [node name="Grass73" parent="Tiles" unique_id=2091984046 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -14)
 
-[node name="Grass72" parent="Tiles" unique_id=339028616 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -14)
+[node name="Boulder11" parent="Tiles" unique_id=701614138 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -14)
 
 [node name="Grass71" parent="Tiles" unique_id=1915049859 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -14)
 
-[node name="Boulder20" parent="Tiles" unique_id=1609458657 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -16)
+[node name="Grass72" parent="Tiles" unique_id=339028616 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -14)
 
-[node name="Grass97" parent="Tiles" unique_id=2013093459 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -16)
+[node name="Grass82" parent="Tiles" unique_id=1389687865 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4)
 
-[node name="Grass96" parent="Tiles" unique_id=1871658050 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -16)
+[node name="Grass83" parent="Tiles" unique_id=1002868954 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="Grass95" parent="Tiles" unique_id=813419200 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -16)
-
-[node name="Grass94" parent="Tiles" unique_id=311210082 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -16)
+[node name="Grass78" parent="Tiles" unique_id=1848098294 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -8)
 
 [node name="Grass92" parent="Tiles" unique_id=1884295199 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -16)
 
-[node name="Grass91" parent="Tiles" unique_id=1321816492 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -16)
+[node name="Grass80" parent="Tiles" unique_id=772507010 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -8)
+
+[node name="Grass24" parent="Tiles" unique_id=1121777804 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -8)
+
+[node name="Grass75" parent="Tiles" unique_id=328476807 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -12)
+
+[node name="Grass96" parent="Tiles" unique_id=1871658050 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -16)
+
+[node name="Grass23" parent="Tiles" unique_id=726287118 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
+
+[node name="Boulder" parent="Tiles" unique_id=781596465 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -8)
+
+[node name="Grass42" parent="Tiles" unique_id=1650657916 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -10)
+
+[node name="Grass44" parent="Tiles" unique_id=1577281379 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -10)
+
+[node name="Grass85" parent="Tiles" unique_id=2039426303 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -16)
 
 [node name="Grass90" parent="Tiles" unique_id=1133434037 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -16)
@@ -244,11 +314,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -16)
 [node name="Grass89" parent="Tiles" unique_id=408284731 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -16)
 
-[node name="Boulder18" parent="Tiles" unique_id=503432411 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -16)
+[node name="Boulder16" parent="Tiles" unique_id=521771571 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -10)
+
+[node name="Grass100" parent="Tiles" unique_id=1675785302 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -16)
+
+[node name="Grass93" parent="Tiles" unique_id=715635626 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -16)
 
 [node name="Grass88" parent="Tiles" unique_id=1660211284 instance=ExtResource("7_6ob4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -16)
+
+[node name="Grass56" parent="Tiles" unique_id=254754819 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -10)
+
+[node name="Grass43" parent="Tiles" unique_id=542057441 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -10)
+
+[node name="Boulder13" parent="Tiles" unique_id=1439951966 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
+
+[node name="Grass41" parent="Tiles" unique_id=860372839 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
+
+[node name="Boulder20" parent="Tiles" unique_id=1609458657 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -16)
+
+[node name="Grass91" parent="Tiles" unique_id=1321816492 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -16)
+
+[node name="Grass58" parent="Tiles" unique_id=1197707866 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -8)
+
+[node name="Grass97" parent="Tiles" unique_id=2013093459 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -16)
+
+[node name="Grass99" parent="Tiles" unique_id=937487020 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -16)
+
+[node name="Boulder18" parent="Tiles" unique_id=503432411 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -16)
+
+[node name="Grass98" parent="Tiles" unique_id=1675104723 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -16)
+
+[node name="Grass138" parent="Tiles" unique_id=434566351 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -26)
 
 [node name="Grass87" parent="Tiles" unique_id=1983105379 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
@@ -256,26 +368,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 [node name="Grass86" parent="Tiles" unique_id=1890865416 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -16)
 
-[node name="Grass85" parent="Tiles" unique_id=2039426303 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -16)
+[node name="Grass148" parent="Tiles" unique_id=436785061 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -26)
 
-[node name="Grass98" parent="Tiles" unique_id=1675104723 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -16)
+[node name="Grass95" parent="Tiles" unique_id=813419200 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -16)
 
-[node name="Grass99" parent="Tiles" unique_id=937487020 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -16)
+[node name="Grass94" parent="Tiles" unique_id=311210082 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -16)
 
-[node name="Grass93" parent="Tiles" unique_id=715635626 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -16)
+[node name="Grass48" parent="Tiles" unique_id=865315186 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -12)
 
-[node name="Grass100" parent="Tiles" unique_id=1675785302 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -16)
+[node name="Grass47" parent="Tiles" unique_id=393930243 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -12)
 
 [node name="Grass84" parent="Tiles" unique_id=1403959534 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -16)
 
-[node name="Boulder26" parent="Tiles" unique_id=1464729227 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -18)
+[node name="Grass50" parent="Tiles" unique_id=270505983 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -14)
 
 [node name="Grass152" parent="Tiles" unique_id=1390886041 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -18)
@@ -283,287 +395,275 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -18)
 [node name="Grass153" parent="Tiles" unique_id=1214554430 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -18)
 
-[node name="Grass154" parent="Tiles" unique_id=359709288 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -18)
+[node name="Boulder15" parent="Tiles" unique_id=949036365 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -12)
+
+[node name="Boulder14" parent="Tiles" unique_id=117768221 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -14)
+
+[node name="Boulder26" parent="Tiles" unique_id=1464729227 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -18)
 
 [node name="Grass155" parent="Tiles" unique_id=972816983 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -18)
 
-[node name="Grass156" parent="Tiles" unique_id=112602456 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -18)
-
-[node name="Grass157" parent="Tiles" unique_id=2020496748 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -18)
-
-[node name="Grass158" parent="Tiles" unique_id=1268652984 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -18)
-
-[node name="Grass159" parent="Tiles" unique_id=1188045362 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -18)
-
-[node name="Boulder27" parent="Tiles" unique_id=1797488254 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -18)
-
-[node name="Grass160" parent="Tiles" unique_id=489556520 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -18)
-
-[node name="Grass161" parent="Tiles" unique_id=912434108 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
-
-[node name="Grass162" parent="Tiles" unique_id=249332975 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -18)
-
-[node name="Grass163" parent="Tiles" unique_id=113199405 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -18)
-
-[node name="Grass164" parent="Tiles" unique_id=263400330 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -18)
-
-[node name="Grass165" parent="Tiles" unique_id=200733961 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -18)
-
-[node name="Grass166" parent="Tiles" unique_id=2057113434 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -18)
-
-[node name="Grass167" parent="Tiles" unique_id=718152805 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -18)
-
-[node name="Grass168" parent="Tiles" unique_id=277745956 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -18)
-
-[node name="Boulder28" parent="Tiles" unique_id=238941853 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -20)
-
-[node name="Grass169" parent="Tiles" unique_id=1927313098 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -20)
-
-[node name="Grass170" parent="Tiles" unique_id=170957984 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -20)
-
-[node name="Grass171" parent="Tiles" unique_id=1115280331 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -20)
-
-[node name="Grass172" parent="Tiles" unique_id=1768454886 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -20)
-
-[node name="Grass173" parent="Tiles" unique_id=1558440418 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -20)
-
-[node name="Grass174" parent="Tiles" unique_id=1918376438 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -20)
-
-[node name="Grass175" parent="Tiles" unique_id=1334040211 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -20)
-
-[node name="Grass176" parent="Tiles" unique_id=1234276100 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -20)
-
-[node name="Boulder29" parent="Tiles" unique_id=975678913 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -20)
-
-[node name="Grass177" parent="Tiles" unique_id=1407984315 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -20)
-
-[node name="Grass178" parent="Tiles" unique_id=2141169639 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
-
-[node name="Grass179" parent="Tiles" unique_id=1890697204 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -20)
-
-[node name="Grass180" parent="Tiles" unique_id=2042982644 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -20)
-
-[node name="Grass181" parent="Tiles" unique_id=1042199308 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -20)
-
-[node name="Grass182" parent="Tiles" unique_id=1168625685 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -20)
-
-[node name="Grass183" parent="Tiles" unique_id=1284457990 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -20)
-
-[node name="Grass184" parent="Tiles" unique_id=1554857054 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -20)
-
-[node name="Grass185" parent="Tiles" unique_id=1309165242 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -20)
-
-[node name="Boulder21" parent="Tiles" unique_id=1269122283 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -22)
-
-[node name="Grass101" parent="Tiles" unique_id=990017643 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -22)
-
-[node name="Grass102" parent="Tiles" unique_id=302290481 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -22)
-
-[node name="Grass103" parent="Tiles" unique_id=345985215 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -22)
-
-[node name="Grass104" parent="Tiles" unique_id=682467718 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -22)
-
-[node name="Grass105" parent="Tiles" unique_id=1329646427 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -22)
-
-[node name="Grass106" parent="Tiles" unique_id=711191666 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -22)
-
-[node name="Grass107" parent="Tiles" unique_id=1797864971 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -22)
-
-[node name="Grass108" parent="Tiles" unique_id=2117743777 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -22)
-
-[node name="Boulder19" parent="Tiles" unique_id=46017149 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -22)
-
-[node name="Grass109" parent="Tiles" unique_id=1208589595 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -22)
-
-[node name="Grass110" parent="Tiles" unique_id=1008844406 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
-
-[node name="Grass111" parent="Tiles" unique_id=1730271889 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -22)
-
-[node name="Grass112" parent="Tiles" unique_id=1067929732 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -22)
-
-[node name="Grass113" parent="Tiles" unique_id=950845369 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -22)
-
-[node name="Grass114" parent="Tiles" unique_id=399333217 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -22)
-
-[node name="Grass115" parent="Tiles" unique_id=1940753211 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -22)
-
-[node name="Grass116" parent="Tiles" unique_id=367828012 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -22)
-
-[node name="Grass117" parent="Tiles" unique_id=1991889406 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -22)
-
-[node name="Boulder22" parent="Tiles" unique_id=1958241371 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -24)
-
-[node name="Grass118" parent="Tiles" unique_id=822692194 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24)
-
-[node name="Grass119" parent="Tiles" unique_id=2072637907 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -24)
-
-[node name="Grass120" parent="Tiles" unique_id=948965084 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -24)
-
-[node name="Grass121" parent="Tiles" unique_id=761876077 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
-
-[node name="Grass122" parent="Tiles" unique_id=1290314408 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -24)
-
-[node name="Grass123" parent="Tiles" unique_id=787947508 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24)
-
-[node name="Grass124" parent="Tiles" unique_id=188976260 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -24)
-
-[node name="Grass125" parent="Tiles" unique_id=498521743 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -24)
-
-[node name="Boulder23" parent="Tiles" unique_id=1498456328 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -24)
-
-[node name="Grass126" parent="Tiles" unique_id=1928884193 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -24)
-
-[node name="Grass127" parent="Tiles" unique_id=1880161932 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
-
-[node name="Grass128" parent="Tiles" unique_id=495628523 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -24)
-
-[node name="Grass129" parent="Tiles" unique_id=834087872 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -24)
-
-[node name="Grass130" parent="Tiles" unique_id=1285093997 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -24)
-
-[node name="Grass131" parent="Tiles" unique_id=1387823072 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -24)
-
-[node name="Grass132" parent="Tiles" unique_id=934416792 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -24)
-
-[node name="Grass133" parent="Tiles" unique_id=324177138 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -24)
-
-[node name="Grass134" parent="Tiles" unique_id=181876872 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -24)
-
 [node name="Boulder24" parent="Tiles" unique_id=959987463 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -26)
+
+[node name="Grass156" parent="Tiles" unique_id=112602456 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -18)
 
 [node name="Grass135" parent="Tiles" unique_id=1412994097 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -26)
 
-[node name="Grass136" parent="Tiles" unique_id=1300170387 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -26)
+[node name="Grass158" parent="Tiles" unique_id=1268652984 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -18)
 
 [node name="Grass137" parent="Tiles" unique_id=483458223 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -26)
 
-[node name="Grass138" parent="Tiles" unique_id=434566351 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -26)
+[node name="Grass159" parent="Tiles" unique_id=1188045362 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -18)
 
-[node name="Grass139" parent="Tiles" unique_id=355434675 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -26)
+[node name="Boulder22" parent="Tiles" unique_id=1958241371 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -24)
 
-[node name="Grass140" parent="Tiles" unique_id=636755734 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -26)
+[node name="Boulder21" parent="Tiles" unique_id=1269122283 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -22)
 
-[node name="Grass141" parent="Tiles" unique_id=1814649476 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -26)
+[node name="Grass157" parent="Tiles" unique_id=2020496748 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -18)
 
-[node name="Grass142" parent="Tiles" unique_id=300325349 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -26)
+[node name="Grass165" parent="Tiles" unique_id=200733961 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -18)
 
-[node name="Boulder25" parent="Tiles" unique_id=793191389 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -26)
+[node name="Grass169" parent="Tiles" unique_id=1927313098 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -20)
 
-[node name="Grass143" parent="Tiles" unique_id=326987883 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -26)
+[node name="Grass171" parent="Tiles" unique_id=1115280331 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -20)
 
-[node name="Grass144" parent="Tiles" unique_id=1745677009 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26)
+[node name="Grass103" parent="Tiles" unique_id=345985215 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -22)
 
-[node name="Grass145" parent="Tiles" unique_id=1024410955 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -26)
+[node name="Grass101" parent="Tiles" unique_id=990017643 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -22)
 
-[node name="Grass146" parent="Tiles" unique_id=533423447 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -26)
+[node name="Boulder28" parent="Tiles" unique_id=238941853 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -20)
 
-[node name="Grass147" parent="Tiles" unique_id=827867777 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -26)
+[node name="Grass161" parent="Tiles" unique_id=912434108 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
 
-[node name="Grass148" parent="Tiles" unique_id=436785061 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -26)
+[node name="Boulder27" parent="Tiles" unique_id=1797488254 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -18)
 
-[node name="Grass149" parent="Tiles" unique_id=1426611093 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -26)
+[node name="Grass163" parent="Tiles" unique_id=113199405 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -18)
 
-[node name="Grass150" parent="Tiles" unique_id=1426624242 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -26)
+[node name="Grass172" parent="Tiles" unique_id=1768454886 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -20)
 
-[node name="Grass151" parent="Tiles" unique_id=80151353 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -26)
+[node name="Grass162" parent="Tiles" unique_id=249332975 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -18)
+
+[node name="Grass154" parent="Tiles" unique_id=359709288 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -18)
+
+[node name="Grass46" parent="Tiles" unique_id=1160327024 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -12)
+
+[node name="Grass166" parent="Tiles" unique_id=2057113434 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -18)
+
+[node name="Grass173" parent="Tiles" unique_id=1558440418 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -20)
+
+[node name="Grass167" parent="Tiles" unique_id=718152805 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -18)
+
+[node name="Grass164" parent="Tiles" unique_id=263400330 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -18)
+
+[node name="Grass160" parent="Tiles" unique_id=489556520 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -18)
+
+[node name="Grass175" parent="Tiles" unique_id=1334040211 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -20)
+
+[node name="Boulder6" parent="Tiles" unique_id=590188480 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -12)
+
+[node name="Grass119" parent="Tiles" unique_id=2072637907 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -24)
+
+[node name="Grass182" parent="Tiles" unique_id=1168625685 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -20)
+
+[node name="Grass168" parent="Tiles" unique_id=277745956 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -18)
+
+[node name="Grass110" parent="Tiles" unique_id=1008844406 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
+
+[node name="Grass130" parent="Tiles" unique_id=1285093997 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -24)
+
+[node name="Grass170" parent="Tiles" unique_id=170957984 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -20)
+
+[node name="Grass32" parent="Tiles" unique_id=1601715450 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -14)
 
 [node name="Grass70" parent="Tiles" unique_id=1093399784 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -14)
 
+[node name="Grass126" parent="Tiles" unique_id=1928884193 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -24)
+
+[node name="Grass139" parent="Tiles" unique_id=355434675 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -26)
+
+[node name="Grass143" parent="Tiles" unique_id=326987883 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -26)
+
+[node name="Grass102" parent="Tiles" unique_id=302290481 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -22)
+
+[node name="Grass176" parent="Tiles" unique_id=1234276100 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -20)
+
+[node name="Grass141" parent="Tiles" unique_id=1814649476 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -26)
+
+[node name="Grass104" parent="Tiles" unique_id=682467718 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -22)
+
+[node name="Grass174" parent="Tiles" unique_id=1918376438 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -20)
+
+[node name="Grass142" parent="Tiles" unique_id=300325349 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -26)
+
+[node name="Grass178" parent="Tiles" unique_id=2141169639 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="Boulder25" parent="Tiles" unique_id=793191389 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -26)
+
+[node name="Grass181" parent="Tiles" unique_id=1042199308 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -20)
+
+[node name="Grass179" parent="Tiles" unique_id=1890697204 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -20)
+
+[node name="Grass105" parent="Tiles" unique_id=1329646427 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -22)
+
+[node name="Grass180" parent="Tiles" unique_id=2042982644 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -20)
+
+[node name="Grass124" parent="Tiles" unique_id=188976260 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -24)
+
+[node name="Grass107" parent="Tiles" unique_id=1797864971 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -22)
+
+[node name="Grass114" parent="Tiles" unique_id=399333217 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -22)
+
+[node name="Grass185" parent="Tiles" unique_id=1309165242 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -20)
+
+[node name="Boulder19" parent="Tiles" unique_id=46017149 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -22)
+
+[node name="Grass177" parent="Tiles" unique_id=1407984315 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -20)
+
+[node name="Grass118" parent="Tiles" unique_id=822692194 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24)
+
+[node name="Grass109" parent="Tiles" unique_id=1208589595 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -22)
+
+[node name="Grass112" parent="Tiles" unique_id=1067929732 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -22)
+
+[node name="Grass120" parent="Tiles" unique_id=948965084 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -24)
+
+[node name="Grass183" parent="Tiles" unique_id=1284457990 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -20)
+
+[node name="Grass121" parent="Tiles" unique_id=761876077 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
+
+[node name="Grass125" parent="Tiles" unique_id=498521743 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -24)
+
+[node name="Boulder29" parent="Tiles" unique_id=975678913 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -20)
+
+[node name="Grass111" parent="Tiles" unique_id=1730271889 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -22)
+
+[node name="Grass184" parent="Tiles" unique_id=1554857054 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -20)
+
+[node name="Grass116" parent="Tiles" unique_id=367828012 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -22)
+
+[node name="Grass108" parent="Tiles" unique_id=2117743777 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -22)
+
+[node name="Boulder8" parent="Tiles" unique_id=309446242 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -8)
+
+[node name="Boulder23" parent="Tiles" unique_id=1498456328 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -24)
+
+[node name="Grass106" parent="Tiles" unique_id=711191666 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -22)
+
+[node name="Grass59" parent="Tiles" unique_id=723126225 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
+
+[node name="Grass57" parent="Tiles" unique_id=2067533379 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -8)
+
+[node name="Grass115" parent="Tiles" unique_id=1940753211 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -22)
+
+[node name="Grass61" parent="Tiles" unique_id=143336897 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+
+[node name="Grass122" parent="Tiles" unique_id=1290314408 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -24)
+
+[node name="Grass131" parent="Tiles" unique_id=1387823072 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -24)
+
+[node name="Grass140" parent="Tiles" unique_id=636755734 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -26)
+
+[node name="Grass113" parent="Tiles" unique_id=950845369 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -22)
+
+[node name="Grass117" parent="Tiles" unique_id=1991889406 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -22)
+
+[node name="Grass134" parent="Tiles" unique_id=181876872 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -24)
+
+[node name="Grass136" parent="Tiles" unique_id=1300170387 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -26)
+
 [node name="Grass69" parent="Tiles" unique_id=1569308418 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -12)
+
+[node name="Grass132" parent="Tiles" unique_id=934416792 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -24)
 
 [node name="Grass68" parent="Tiles" unique_id=2055524287 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -12)
@@ -574,119 +674,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -12)
 [node name="Boulder10" parent="Tiles" unique_id=217782197 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -12)
 
+[node name="Grass65" parent="Tiles" unique_id=48986881 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -10)
+
+[node name="Grass145" parent="Tiles" unique_id=1024410955 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -26)
+
 [node name="Grass66" parent="Tiles" unique_id=2078967050 instance=ExtResource("7_6ob4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -12)
 
-[node name="Grass65" parent="Tiles" unique_id=48986881 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -10)
+[node name="Grass123" parent="Tiles" unique_id=787947508 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24)
+
+[node name="Grass147" parent="Tiles" unique_id=827867777 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -26)
 
 [node name="Grass64" parent="Tiles" unique_id=593915031 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -10)
 
-[node name="Grass63" parent="Tiles" unique_id=980739945 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -10)
-
 [node name="Boulder9" parent="Tiles" unique_id=403493185 instance=ExtResource("6_bmar4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -10)
 
-[node name="Grass62" parent="Tiles" unique_id=1049234609 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -10)
+[node name="Grass129" parent="Tiles" unique_id=834087872 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -24)
 
-[node name="Grass61" parent="Tiles" unique_id=143336897 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+[node name="Grass63" parent="Tiles" unique_id=980739945 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -10)
 
-[node name="Boulder8" parent="Tiles" unique_id=309446242 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -8)
+[node name="Grass151" parent="Tiles" unique_id=80151353 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -26)
 
-[node name="Grass59" parent="Tiles" unique_id=723126225 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
-
-[node name="Grass58" parent="Tiles" unique_id=1197707866 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -8)
-
-[node name="Grass57" parent="Tiles" unique_id=2067533379 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -8)
-
-[node name="Grass56" parent="Tiles" unique_id=254754819 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -10)
-
-[node name="Grass55" parent="Tiles" unique_id=987980407 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -12)
-
-[node name="Grass54" parent="Tiles" unique_id=1238230218 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -14)
-
-[node name="Boulder7" parent="Tiles" unique_id=1157684451 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -14)
-
-[node name="Grass53" parent="Tiles" unique_id=1815619856 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -14)
-
-[node name="Grass52" parent="Tiles" unique_id=263021936 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -14)
-
-[node name="Grass51" parent="Tiles" unique_id=1797133823 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -14)
-
-[node name="Grass50" parent="Tiles" unique_id=270505983 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -14)
-
-[node name="Grass49" parent="Tiles" unique_id=1433452550 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -12)
-
-[node name="Grass48" parent="Tiles" unique_id=865315186 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -12)
-
-[node name="Grass47" parent="Tiles" unique_id=393930243 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -12)
-
-[node name="Boulder6" parent="Tiles" unique_id=590188480 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -12)
-
-[node name="Grass46" parent="Tiles" unique_id=1160327024 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -12)
-
-[node name="Grass45" parent="Tiles" unique_id=899612147 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -10)
-
-[node name="Grass44" parent="Tiles" unique_id=1577281379 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -10)
-
-[node name="Grass43" parent="Tiles" unique_id=542057441 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -10)
-
-[node name="Boulder5" parent="Tiles" unique_id=1202847691 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -10)
-
-[node name="Boulder16" parent="Tiles" unique_id=521771571 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -10)
-
-[node name="Boulder15" parent="Tiles" unique_id=949036365 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -12)
-
-[node name="Boulder14" parent="Tiles" unique_id=117768221 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -14)
-
-[node name="Boulder13" parent="Tiles" unique_id=1439951966 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
-
-[node name="Grass42" parent="Tiles" unique_id=1650657916 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -10)
-
-[node name="Grass41" parent="Tiles" unique_id=860372839 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
-
-[node name="Grass32" parent="Tiles" unique_id=1601715450 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -14)
-
-[node name="Grass31" parent="Tiles" unique_id=319009760 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -12)
-
-[node name="Grass26" parent="Tiles" unique_id=366712148 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -10)
-
-[node name="Grass24" parent="Tiles" unique_id=1121777804 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -8)
+[node name="Grass128" parent="Tiles" unique_id=495628523 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -24)
 
 [node name="Grass22" parent="Tiles" unique_id=635950461 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -8)
@@ -694,59 +713,71 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -8)
 [node name="Grass21" parent="Tiles" unique_id=1677586868 instance=ExtResource("4_gjqcy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
-[node name="Grass8" parent="Tiles" unique_id=1078723813 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+[node name="Grass62" parent="Tiles" unique_id=1049234609 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -10)
 
-[node name="Grass9" parent="Tiles" unique_id=1331594039 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+[node name="Grass127" parent="Tiles" unique_id=1880161932 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
 
-[node name="Grass10" parent="Tiles" unique_id=1495516546 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+[node name="Grass144" parent="Tiles" unique_id=1745677009 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26)
 
-[node name="Grass11" parent="Tiles" unique_id=1796976887 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+[node name="Grass133" parent="Tiles" unique_id=324177138 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -24)
 
-[node name="Grass12" parent="Tiles" unique_id=1178867053 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+[node name="Grass146" parent="Tiles" unique_id=533423447 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -26)
 
-[node name="Grass13" parent="Tiles" unique_id=2114120688 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+[node name="Grass150" parent="Tiles" unique_id=1426624242 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -26)
 
-[node name="Grass14" parent="Tiles" unique_id=757809044 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
+[node name="Grass149" parent="Tiles" unique_id=1426611093 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -26)
 
-[node name="Grass15" parent="Tiles" unique_id=464572517 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+[node name="Grass31" parent="Tiles" unique_id=319009760 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -12)
 
-[node name="Grass16" parent="Tiles" unique_id=819955705 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+[node name="Boulder5" parent="Tiles" unique_id=1202847691 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -10)
 
-[node name="Grass17" parent="Tiles" unique_id=283584013 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+[node name="Grass26" parent="Tiles" unique_id=366712148 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -10)
 
-[node name="Grass18" parent="Tiles" unique_id=2101260023 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+[node name="Boulder7" parent="Tiles" unique_id=1157684451 instance=ExtResource("6_bmar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -14)
 
-[node name="Grass19" parent="Tiles" unique_id=2012365211 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+[node name="Grass49" parent="Tiles" unique_id=1433452550 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -12)
 
-[node name="Grass20" parent="Tiles" unique_id=376651560 instance=ExtResource("4_gjqcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
+[node name="Grass55" parent="Tiles" unique_id=987980407 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -12)
 
-[node name="Boulder" parent="Tiles" unique_id=781596465 instance=ExtResource("6_bmar4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -8)
+[node name="Grass54" parent="Tiles" unique_id=1238230218 instance=ExtResource("7_6ob4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -14)
 
-[node name="Grass23" parent="Tiles" unique_id=726287118 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
+[node name="Grass53" parent="Tiles" unique_id=1815619856 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -14)
 
-[node name="Grass81" parent="Tiles" unique_id=1406337236 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
+[node name="Grass51" parent="Tiles" unique_id=1797133823 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -14)
 
-[node name="Grass82" parent="Tiles" unique_id=1389687865 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4)
+[node name="Grass52" parent="Tiles" unique_id=263021936 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -14)
 
-[node name="Grass83" parent="Tiles" unique_id=1002868954 instance=ExtResource("7_6ob4b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+[node name="Grass45" parent="Tiles" unique_id=899612147 instance=ExtResource("4_gjqcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -10)
+
+[node name="Grass186" parent="Tiles" unique_id=1600967872 instance=ExtResource("9_et6a8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
+
+[node name="EnemySpawn" parent="Tiles" unique_id=243011234 instance=ExtResource("10_ucv7y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 23)
+
+[node name="EnemySpawn2" parent="Tiles" unique_id=533943669 instance=ExtResource("10_ucv7y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 23)
+
+[node name="Grass187" parent="Tiles" unique_id=180507874 instance=ExtResource("9_et6a8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 6)
 
 [node name="ShenakyShnake" type="Node3D" parent="." unique_id=2106071133]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

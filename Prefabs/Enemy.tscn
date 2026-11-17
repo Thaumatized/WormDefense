@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c258pn4y3h7yn"]
+
+[ext_resource type="Material" uid="uid://2iqmb081c3pe" path="res://Materials/Enemy.tres" id="1_8k53p"]
+[ext_resource type="Script" uid="uid://cjej0h76k8g74" path="res://Scripts/Enemy.cs" id="1_gti1y"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_45flt"]
+radius = 0.375
+height = 0.75
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
+radius = 0.375
+
+[node name="Enemy" type="Area3D" unique_id=1095028902]
+script = ExtResource("1_gti1y")
+speed = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1719454998]
+material_override = ExtResource("1_8k53p")
+mesh = SubResource("SphereMesh_45flt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1495890577]
+shape = SubResource("SphereShape3D_45flt")

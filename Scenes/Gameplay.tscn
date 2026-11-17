@@ -6,30 +6,62 @@
 [ext_resource type="PackedScene" uid="uid://bj7popd0kp1gp" path="res://Prefabs/Apple.tscn" id="2_cfeic"]
 [ext_resource type="Script" uid="uid://bl4p055812bvm" path="res://Scripts/Player.cs" id="2_r5ka5"]
 [ext_resource type="PackedScene" uid="uid://brsofgwqglfc5" path="res://Prefabs/Tiles/boulder.tscn" id="2_tdndw"]
-[ext_resource type="Script" uid="uid://cphtp8wg1jlkt" path="res://Scripts/WeightedScene.cs" id="3_xwjbm"]
+[ext_resource type="Script" uid="uid://c7qodsu1ysqwi" path="res://Scripts/Resources/SpawnWave.cs" id="3_bk2no"]
+[ext_resource type="Script" uid="uid://cphtp8wg1jlkt" path="res://Scripts/Resources/WeightedScene.cs" id="3_xwjbm"]
 [ext_resource type="PackedScene" uid="uid://f28ruqj3oe45" path="res://Prefabs/SnakeSegment.tscn" id="4_mofsa"]
 [ext_resource type="Material" uid="uid://rrxgeujasi3a" path="res://Materials/Snake.tres" id="4_ovofm"]
+[ext_resource type="PackedScene" uid="uid://c258pn4y3h7yn" path="res://Prefabs/Enemy.tscn" id="4_qaqk3"]
+[ext_resource type="Script" uid="uid://ca82nnx68et8h" path="res://Scripts/Resources/SpawnWaveSpawnable.cs" id="5_rbnsi"]
 [ext_resource type="PackedScene" uid="uid://cy8jr71wseda0" path="res://Prefabs/Tiles/starterGrass.tscn" id="5_rhmiw"]
 [ext_resource type="PackedScene" uid="uid://dlueksnv54g7b" path="res://Prefabs/Tiles/grassWithApple.tscn" id="5_uotjs"]
 [ext_resource type="PackedScene" uid="uid://dn7or4bbryj4" path="res://Prefabs/Tiles/grassWithDefenceTarget.tscn" id="9_7wr7o"]
+[ext_resource type="PackedScene" uid="uid://b7ab11aydfmwo" path="res://Prefabs/Tiles/enemySpawn.tscn" id="10_5klrq"]
 [ext_resource type="Script" uid="uid://c7twy4cli1v5u" path="res://Scripts/SnakeSegment.cs" id="11_w5l26"]
+
+[sub_resource type="Resource" id="Resource_2aia5"]
+script = ExtResource("5_rbnsi")
+prefab = ExtResource("4_qaqk3")
+weight = 1.0
+cost = 1
+metadata/_custom_type_script = "uid://ca82nnx68et8h"
+
+[sub_resource type="Resource" id="Resource_5klrq"]
+script = ExtResource("3_bk2no")
+budget = 10
+spendingRate = 0.2
+spawnables = Array[Object]([SubResource("Resource_2aia5")])
+metadata/_custom_type_script = "uid://c7qodsu1ysqwi"
+
+[sub_resource type="Resource" id="Resource_k2tjh"]
+script = ExtResource("5_rbnsi")
+prefab = ExtResource("4_qaqk3")
+weight = 1.0
+cost = 1
+metadata/_custom_type_script = "uid://ca82nnx68et8h"
+
+[sub_resource type="Resource" id="Resource_24v7v"]
+script = ExtResource("3_bk2no")
+budget = 20
+spendingRate = 0.5
+spawnables = Array[Object]([SubResource("Resource_k2tjh")])
+metadata/_custom_type_script = "uid://c7qodsu1ysqwi"
 
 [sub_resource type="Resource" id="Resource_xwjbm"]
 script = ExtResource("3_xwjbm")
 prefab = ExtResource("1_yijg0")
-weight = 0.875
+weight = 0.95
 metadata/_custom_type_script = "uid://cphtp8wg1jlkt"
 
 [sub_resource type="Resource" id="Resource_rhmiw"]
 script = ExtResource("3_xwjbm")
 prefab = ExtResource("2_tdndw")
-weight = 0.1
+weight = 0.045
 metadata/_custom_type_script = "uid://cphtp8wg1jlkt"
 
 [sub_resource type="Resource" id="Resource_2xboj"]
 script = ExtResource("3_xwjbm")
 prefab = ExtResource("5_uotjs")
-weight = 0.025
+weight = 0.005
 metadata/_custom_type_script = "uid://cphtp8wg1jlkt"
 
 [sub_resource type="BoxMesh" id="BoxMesh_aj2hm"]
@@ -45,11 +77,12 @@ height = 0.8
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhmiw"]
 radius = 0.4
 
-[node name="Node3D" type="Node3D" unique_id=1283898670 node_paths=PackedStringArray("tileRoot")]
+[node name="Node3D2" type="Node3D" unique_id=1283898670 node_paths=PackedStringArray("tileRoot")]
 script = ExtResource("1_vu60g")
 randomizeLevel = true
 tileRoot = NodePath("Tiles")
 Apple = ExtResource("2_cfeic")
+spawnWaves = Array[Object]([SubResource("Resource_5klrq"), SubResource("Resource_24v7v")])
 
 [node name="Other" type="Node3D" parent="." unique_id=941740858]
 
@@ -62,6 +95,7 @@ tilePrefabs = Array[Object]([SubResource("Resource_xwjbm"), SubResource("Resourc
 safeTile = ExtResource("5_rhmiw")
 wallTile = ExtResource("2_tdndw")
 defenceTargetTile = ExtResource("9_7wr7o")
+enemySpawnTile = ExtResource("10_5klrq")
 Area = Vector2i(50, 50)
 StartingArea = Vector2i(5, 8)
 defenceTargetArea = Vector2i(15, 15)

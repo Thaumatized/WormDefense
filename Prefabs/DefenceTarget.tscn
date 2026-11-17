@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b2x1kp8ix2jkq"]
 
+[ext_resource type="Script" uid="uid://tbwio0iq22k5" path="res://Scripts/DefenceTarget.cs" id="1_ctco7"]
 [ext_resource type="Material" uid="uid://s3dcgc1lm8bx" path="res://Materials/DefenceTarget.tres" id="1_o7oub"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_ij6hu"]
@@ -9,6 +10,7 @@ outer_radius = 0.5
 [sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
 
 [node name="DefenceTarget" type="StaticBody3D" unique_id=1325488358]
+script = ExtResource("1_ctco7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1719454998]
 material_override = ExtResource("1_o7oub")

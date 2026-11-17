@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class RandomLevelGenerator : Node3D
@@ -12,6 +13,8 @@ public partial class RandomLevelGenerator : Node3D
 	PackedScene wallTile;
 	[Export]
 	PackedScene defenceTargetTile;
+	[Export]
+	PackedScene enemySpawnTile;
 
 	[Export]
 	Vector2I Area;
@@ -22,6 +25,8 @@ public partial class RandomLevelGenerator : Node3D
 	Vector2I defenceTargetArea;
 	[Export]
 	int defenceTargetCount = 5;
+	[Export]
+	int enemeySpawnerCount = 20;
 
     public void Randomize()
     {
@@ -41,7 +46,6 @@ public partial class RandomLevelGenerator : Node3D
 		//Vector2I defenceMaximumPoint = defenceMinimumPoint + defenceTargetArea- Vector2I.One;
 
 		List<Vector2I> defenceTargetCoords = new List<Vector2I>();
-
 		while(defenceTargetCoords.Count < defenceTargetCount)
 		{	
 			Vector2I potentialCoords = new Vector2I((int)(GD.Randi() % defenceTargetArea.X) + defenceMinimumPoint.X, (int)(GD.Randi() % defenceTargetArea.Y) + defenceMinimumPoint.Y);
@@ -56,6 +60,24 @@ public partial class RandomLevelGenerator : Node3D
 			defenceTargetCoords.Add(potentialCoords);
 		}
 
+		List<Vector2I> enemySpawnerCoords = new List<Vector2I>();
+		while(enemySpawnerCoords.Count < enemeySpawnerCount)
+		{	
+			// Horizontal => z/y is min or max
+			bool horizontal = GD.Randf() >= 0.5f;
+			Vector2I potentialCoords;
+			if(horizontal)
+			{
+				potentialCoords = new Vector2I((int)(GD.Randi() % defenceTargetArea.X) + defenceMinimumPoint.X, GD.Randf() > 0.5f ? minimumPoint.Y + 1 : maximumPoint.Y - 1);
+			}
+			else
+			{
+				potentialCoords = new Vector2I(GD.Randf() > 0.5f ? minimumPoint.X + 1 : maximumPoint.X - 1, (int)(GD.Randi() % defenceTargetArea.Y) + defenceMinimumPoint.Y);
+			}
+			
+			enemySpawnerCoords.Add(potentialCoords);
+		}
+
 		for(int x = minimumPoint.X; x <= maximumPoint.X; x++)
 		{
 			for(int z = minimumPoint.Y; z <= maximumPoint.Y; z++)
@@ -65,6 +87,10 @@ public partial class RandomLevelGenerator : Node3D
 				if(defenceTargetCoords.Contains(new Vector2I(x, z)))
 				{
 					prefab = defenceTargetTile;
+				}
+				else if(enemySpawnerCoords.Contains(new Vector2I(x, z)))
+				{
+					prefab = enemySpawnTile;
 				}
 				else if(x >= startingMinimumPoint.X && x <= startingMaximumPoint.X
 					&& z >= startingMinimumPoint.Y && z <= startingMaximumPoint.Y)
@@ -94,7 +120,7 @@ public partial class RandomLevelGenerator : Node3D
 					prefab = tilePrefabs[index].prefab;
 				}
 
-				Node3D newTile = prefab.Instantiate<Node3D>();
+				Tile newTile = prefab.Instantiate<Tile>();
 				newTile.Position = new Vector3(x, 0, z);
 				this.AddChild(newTile);
 			}
