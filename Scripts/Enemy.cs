@@ -9,6 +9,9 @@ public partial class Enemy : Area3D
 	[Export]
 	public float speed = 1;
 
+	[Export]
+	public int health = 6;
+
 	private DefenceTarget target;
 
     public override void _EnterTree()
@@ -23,6 +26,15 @@ public partial class Enemy : Area3D
 	{
 		enemies.Remove(this);
 		QueueFree();
+	}
+
+	public void takeDamage(int damage)
+	{
+		health -= damage;
+		if(health <= 0)
+		{
+			Destroy();
+		}
 	}
 
     public override void _PhysicsProcess(double delta)

@@ -9,4 +9,6 @@ public partial class SnakeSegment : RigidBody3D
 	public Player player;
 
 	public SnakeLocomotionState locomotionState;
+	[Export]
+	public Turret turret;
 }

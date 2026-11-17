@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://h0x7x6qn363g"]
+
+[ext_resource type="Script" uid="uid://brj1dnopfakyh" path="res://Scripts/Turret.cs" id="1_ftox0"]
+[ext_resource type="Material" uid="uid://bot0k80yuu4g0" path="res://Materials/Stone.tres" id="2_ftox0"]
+[ext_resource type="Material" uid="uid://s3dcgc1lm8bx" path="res://Materials/DefenceTarget.tres" id="3_ucgik"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_45flt"]
+radius = 5.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ucgik"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d5jy7"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 1.0
+
+[node name="Turret" type="Area3D" unique_id=1059488106 node_paths=PackedStringArray("beam", "barrel")]
+script = ExtResource("1_ftox0")
+beam = NodePath("beam")
+barrel = NodePath("barrel")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1281561929]
+shape = SubResource("SphereShape3D_45flt")
+
+[node name="barrel" type="Node3D" parent="." unique_id=1438330457]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="barrel" unique_id=2139997939]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.25)
+material_override = ExtResource("2_ftox0")
+mesh = SubResource("CylinderMesh_ucgik")
+
+[node name="beam" type="Node3D" parent="." unique_id=945357582]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="beam" unique_id=427233411]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.5)
+material_override = ExtResource("3_ucgik")
+mesh = SubResource("CylinderMesh_d5jy7")
